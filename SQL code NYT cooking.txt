@@ -1,0 +1,655 @@
+﻿SELECT ROW_NUMBER() OVER(ORDER BY COUNT(name) DESC) AS 'Rank',
+    name AS 'Name', 
+    COUNT(name) AS 'Count'
+FROM ingredients
+GROUP BY 2
+LIMIT 40;
+
+
+--- COMMAND ---
+
+
+SELECT name, 
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%salt%' AND 
+        name NOT LIKE '%salted%'AND
+        name NOT LIKE '%salt pork%' AND
+        name NOT LIKE '%salt cod%' AND
+        name NOT LIKE '%garlic salt%' AND
+        name NOT LIKE '%seasoned salt%' AND
+        name NOT LIKE '%salt-%' AND
+        name NOT LIKE '%-salt%' AND
+        name NOT LIKE '%saltine%' AND
+        name NOT LIKE '%saltpeter%' AND
+        name NOT LIKE '%caper%'
+GROUP BY name
+ORDER BY 2 DESC
+
+
+--- COMMAND ---
+
+
+WITH salts AS (
+    SELECT name, 
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%salt%' AND 
+        name NOT LIKE '%salted%'AND
+        name NOT LIKE '%salt pork%' AND
+        name NOT LIKE '%salt cod%' AND
+        name NOT LIKE '%garlic salt%' AND
+        name NOT LIKE '%seasoned salt%' AND
+        name NOT LIKE '%salt-%' AND
+        name NOT LIKE '%-salt%' AND
+        name NOT LIKE '%saltine%' AND
+        name NOT LIKE '%saltpeter%' AND
+        name NOT LIKE '%caper%'
+GROUP BY name
+ORDER BY 2 DESC)
+
+
+SELECT SUM(counts) AS 'total_salt_count'
+FROM salts;
+
+
+--- COMMAND ---
+
+
+WITH garlics AS (
+    SELECT name, 
+        COUNT(name) AS 'counts'
+    FROM ingredients
+    WHERE name LIKE '%garlic%' AND
+            name NOT LIKE '%powder%' AND
+            name NOT LIKE '%sausage%' AND
+            name NOT LIKE '%croutons%' AND
+            name NOT LIKE '%oil%' AND
+            name NOT LIKE '%chives%' AND
+            name NOT LIKE '%broth%' AND
+            name NOT LIKE '%chili%' AND
+            name NOT LIKE '%granulated%' AND
+            name NOT LIKE '%spring%' AND
+            name NOT LIKE '%green%' AND
+            name NOT LIKE '%garlic toast%' AND
+            name NOT LIKE '%fresh ginger juice%' AND
+            name NOT LIKE '%For the yogurt-garlic sauce:%'
+    GROUP BY name
+    ORDER BY 2 DESC)
+SELECT SUM(counts) AS 'total_garlic_count'
+FROM garlics;
+
+
+--- COMMAND ---
+
+
+WITH evoo AS(
+    SELECT name, 
+        COUNT(name) AS 'counts'
+    FROM ingredients
+    WHERE name LIKE '%olive oil%' OR name LIKE '%evoo%' AND
+            name NOT LIKE '%pie%' AND
+            name NOT LIKE '%yeasted olive oil pastry%' AND
+            name NOT LIKE '%tuna%' AND
+            name NOT LIKE '%crust%' AND
+            name NOT LIKE '%sardines%'
+    GROUP BY name
+    ORDER BY 2 DESC)
+SELECT SUM(counts) AS 'total_evoo_count'
+FROM evoo;
+
+
+--- COMMAND ---
+
+
+WITH sugars AS(
+SELECT name, 
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%sugar%' AND
+        name NOT LIKE '%brown%' AND
+        name NOT LIKE '%superfine%' AND
+        name NOT LIKE '%peas%' AND
+        name NOT LIKE '%snap%' AND
+        name NOT LIKE '%powdered%' AND
+        name NOT LIKE '%confectioner%' AND
+        name NOT LIKE '%dem%' AND
+        name NOT LIKE '%turbinado%' AND
+        name NOT LIKE '%cin%' AND
+        name NOT LIKE '%pumpkin%' AND
+        name NOT LIKE '%palm%' AND
+        name NOT LIKE '%molasses%' AND
+        name NOT LIKE '%sugared%' AND
+        name NOT LIKE '%muscovado%' AND
+        name NOT LIKE '%black%' AND
+        name NOT LIKE '%maple%'
+GROUP BY name
+ORDER BY 2 DESC)
+SELECT SUM(counts) AS 'total_sugar_count'
+FROM sugars;
+
+
+--- COMMAND ---
+
+
+WITH butters AS(
+SELECT name, 
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%butter%' AND
+    name NOT LIKE '%milk%' AND
+    name NOT LIKE '%nut%' AND
+    name NOT LIKE '%almond%' AND
+    name NOT LIKE '%apple%' AND
+    name NOT LIKE '%scotch%' AND
+    name NOT LIKE '%Earth Balance%' AND
+    name NOT LIKE '%bean%' AND
+    name NOT LIKE '%cream%' AND
+    name NOT LIKE '%cocoa butter%' AND
+    name NOT LIKE '%butterfield%' AND
+    name NOT LIKE '%squash%' AND
+    name NOT LIKE '%clams%' AND
+    name NOT LIKE '%pickles%' AND
+    name NOT LIKE '%butterflied%'
+GROUP BY name
+ORDER BY 2 DESC)
+SELECT SUM(counts) AS 'total_butter_count'
+FROM butters;
+
+
+--- COMMAND ---
+
+
+WITH onions AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%onion%' AND
+    name NOT LIKE '%green%' AND
+    name NOT LIKE '%spring%' AND
+    name NOT LIKE '%powder%' AND
+    name NOT LIKE '%cooked oxtail%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_onion_count'
+FROM onions;
+
+
+--- COMMAND ---
+
+
+WITH black_peppers AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%pepper%' AND
+    name NOT LIKE '%bell%' AND
+    name NOT LIKE '%chili%' AND
+    name NOT LIKE '%cayenne%' AND
+    name NOT LIKE '%green%' AND
+    name NOT LIKE '%flakes%' AND
+    name NOT LIKE '%red%' AND
+    name NOT LIKE '%jal%' AND
+    name NOT LIKE '%peppers%' AND
+    name NOT LIKE '%sichuan%' AND
+    name NOT LIKE '%aleppo%' AND
+    name NOT LIKE '%yellow%' AND
+    name NOT LIKE '%serrano%' AND
+    name NOT LIKE '%hot%' AND
+    name NOT LIKE '%mint%' AND
+    name NOT LIKE '%chipotle%' AND
+    name NOT LIKE '%turkish%' AND
+    name NOT LIKE '%scotch%' AND
+    name NOT LIKE '%sansho%' AND
+    name NOT LIKE '%hab%' AND
+    name NOT LIKE '%chile%' AND
+    name NOT LIKE '%anaheim%' AND
+    name NOT LIKE '%vodka%' AND
+    name NOT LIKE '%bonnet%' AND
+    name NOT LIKE '%pepperidge%' AND
+    name NOT LIKE '%sweet%' AND
+    name NOT LIKE '%pickle%' AND
+    name NOT LIKE '%pepperon%' AND
+    name NOT LIKE '%vinegar%' AND
+    name NOT LIKE '%salsa%' AND
+    name NOT LIKE '%orange%' AND
+    name NOT LIKE '%espelet%' AND
+    name NOT LIKE '%cabal%' AND
+    name NOT LIKE '%jelly%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_black_pepper_count'
+FROM black_peppers;
+
+
+--- COMMAND ---
+
+
+WITH waters AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%water%' AND
+    name NOT LIKE '%melon%' AND
+    name NOT LIKE '%cres%' AND
+    name NOT LIKE '%rose%' AND
+    name NOT LIKE '%ches%' AND
+    name NOT LIKE '%soda%' AND
+    name NOT LIKE '%tonic%' AND
+    name NOT LIKE '%orange%' AND
+    name NOT LIKE '%sparkling%' AND
+    name NOT LIKE '%tuna%' AND
+    name NOT LIKE '%coconut water%' AND
+    name NOT LIKE '%seltzer%' AND
+    name NOT LIKE '%caper%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_water_count'
+FROM waters;
+
+
+--- COMMAND ---
+
+
+WITH eggs AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%egg%' AND
+    name NOT LIKE '%plant%' AND
+    name NOT LIKE '%parm%' AND
+    name NOT LIKE '%noodles%' AND
+    name NOT LIKE '%taleggio%' AND
+    name NOT LIKE '%eggless%' AND
+    name NOT LIKE '%bread%' AND
+    name NOT LIKE '%replacer%' AND
+    name NOT LIKE '%reggiano%' AND
+    name NOT LIKE '%radish%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_egg_count'
+FROM eggs;
+
+
+--- COMMAND ---
+
+
+WITH parsleys AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%parsley%' AND
+    name NOT LIKE '%sausage%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_parsley_count'
+FROM parsleys;
+
+
+--- COMMAND ---
+
+
+WITH lemons AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%lemon%' AND
+    name NOT LIKE '%pepper%' AND
+    name NOT LIKE '%gras%' AND
+    name NOT LIKE '%vodka%' AND
+    name NOT LIKE '%tea%' AND
+    name NOT LIKE '%soda%' AND
+    name NOT LIKE '%thyme%' AND
+    name NOT LIKE '%lemon oil%' AND
+    name NOT LIKE '%marmalade%' AND
+    name NOT LIKE '%brandy%' AND
+    name NOT LIKE '%verb%' AND
+    name NOT LIKE '%avgolemono%' AND
+    name NOT LIKE '%lemon hart%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_lemon_count'
+FROM lemons;
+
+
+--- COMMAND ---
+
+
+WITH heavy_creams AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%heavy cream%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_heavy_cream_count'
+FROM heavy_creams;
+
+
+--- COMMAND ---
+
+
+WITH milks AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%milk%' AND
+    name NOT LIKE '%butter%' AND
+    name NOT LIKE '%coconut%' AND
+    name NOT LIKE '%condensed%' AND
+    name NOT LIKE '%chocolate%' AND
+    name NOT LIKE '%yogurt%' AND
+    name NOT LIKE '%soy milk' AND
+    name NOT LIKE '%ricotta%' AND
+    name NOT LIKE '%almond milk' AND
+    name NOT LIKE '%powder%' AND
+    name NOT LIKE '%goat%' AND
+    name NOT LIKE '%mozz%' AND
+    name NOT LIKE '%feta%' AND
+    name NOT LIKE '%evaporated%' AND
+    name NOT LIKE '%non-dairy milk'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_milk_count'
+FROM milks;
+
+
+--- COMMAND ---
+
+
+WITH flours AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%flour%' AND
+    name NOT LIKE '%tortilla%' AND
+    name NOT LIKE '%rice%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_flour_count'
+FROM flours;
+
+
+--- COMMAND ---
+
+
+WITH tomatoes AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%tomato%' AND
+    name NOT LIKE '%paste%' AND
+    name NOT LIKE '%green%' AND
+    name NOT LIKE '%dried%' AND
+    name NOT LIKE '%broth%' AND
+    name NOT LIKE '%ketchup%' AND
+    name NOT LIKE '%chutney%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_tomato_count'
+FROM tomatoes;
+
+
+--- COMMAND ---
+
+
+WITH gingers AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%ginger%' AND
+    name NOT LIKE '%beer%' AND
+    name NOT LIKE '%candied%' AND
+    name NOT LIKE '%pickled%' AND
+    name NOT LIKE '%syrup%' AND
+    name NOT LIKE '%crystallized%' AND
+    name NOT LIKE '%snap%' AND
+    name NOT LIKE '%sauce%' AND
+    name NOT LIKE '%ale%' AND
+    name NOT LIKE '%preserves%' AND
+    name NOT LIKE '%marmalade%' AND
+    name NOT LIKE '%dr%' AND
+    name NOT LIKE '%soy%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_ginger_count'
+FROM gingers;
+
+
+--- COMMAND ---
+
+
+WITH thymes AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%thyme%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_thyme_count'
+FROM thymes;
+
+
+--- COMMAND ---
+
+
+WITH scallions AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%scallion%' OR 
+    name LIKE '%green onion%' OR
+    name LIKE '%spring onion%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_scallion_count'
+FROM scallions;
+
+
+--- COMMAND ---
+
+
+WITH shallots AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%shallot%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_shallot_count'
+FROM shallots;
+
+
+--- COMMAND ---
+
+
+WITH vegetable_oils AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%vegetable oil%' OR
+    name LIKE '%canola oil%' AND
+    name NOT LIKE '%spray%' AND
+    name NOT LIKE '%trout%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_vegetable_oil_count'
+FROM vegetable_oils;
+
+
+--- COMMAND ---
+
+
+WITH white_wines AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%dry white wine%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_whites_count'
+FROM white_wines;
+
+
+--- COMMAND ---
+
+
+WITH cinnamons AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%cinnamon%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_cinnamon_count'
+FROM cinnamons;
+
+
+--- COMMAND ---
+
+
+WITH carrots AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%carrot%' AND
+    name NOT LIKE '%juice%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_carrot_count'
+FROM carrots;
+
+
+--- COMMAND ---
+
+
+WITH shoyus AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%soy sauce%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_shoyu_count'
+FROM shoyus;
+
+
+--- COMMAND ---
+
+
+WITH celerys AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%celery%' AND
+    name NOT LIKE '%seed%' AND
+    name NOT LIKE '%juice%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_celery_count'
+FROM celerys;
+
+
+--- COMMAND ---
+
+
+WITH potatoes AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%potato%' AND
+    name NOT LIKE '%sweet%' AND
+    name NOT LIKE '%chip%' AND
+    name NOT LIKE '%flour%' AND
+    name NOT LIKE '%gnocchi%' AND
+    name NOT LIKE '%mash%' AND
+    name NOT LIKE '%potato starch%' AND
+    name NOT LIKE '%dip%' AND
+    name NOT LIKE '%rolls%' AND
+    name NOT LIKE '%buns%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_potato_count'
+FROM potatoes;
+
+
+--- COMMAND ---
+
+
+WITH bays AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%bay lea%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_bays_count'
+FROM bays;
+
+
+--- COMMAND ---
+
+
+WITH broths AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%chicken broth%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_broths_count'
+FROM broths;
+
+
+--- COMMAND ---
+
+
+WITH cilantros AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%cilantro%' AND
+    name NOT LIKE '%root%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_cilantro_count'
+FROM cilantros;
+
+
+--- COMMAND ---
+
+
+WITH baking_powders AS(
+SELECT name,
+    COUNT(name) AS 'counts'
+FROM ingredients
+WHERE name LIKE '%baking powder%'
+GROUP BY name
+ORDER BY 2 DESC
+)
+SELECT SUM(counts) AS 'total_baking_powder_count'
+FROM baking_powders;
