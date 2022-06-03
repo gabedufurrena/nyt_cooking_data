@@ -1,0 +1,26 @@
+# import data from SQL analysis
+
+final_ingredient_df = pd.DataFrame({
+    'ingredient': ['Salt', 'Black Pepper', 'Olive Oil', 'Garlic', 'Butter', 'Onion', 'Lemon', 'White Sugar', 'Eggs', 'Flour', 'Parsley', 'Tomato', 'Water', 'Thyme', 'Milk', 'Ginger', 'Heavy Cream', 'Carrots', 'Scallions', 'Vegetable or Canola Oil', 'Shallots', 'Potatoes', 'Celery', 'Bay Leaves', 'Cinnamon', 'Cilantro', 'Soy Sauce', 'Dry White Wine', 'Chicken Broth', 'Baking Powder'],
+    'count': [14805, 10697, 6985, 6750, 5905, 5396, 4457, 4381, 4333, 3480, 3069, 2901, 2507, 1885, 1742, 1692, 1587, 1534, 1531, 1481, 1415, 1317, 1320, 1231, 1210, 1175, 990, 962, 789, 719]
+})
+final_ingredient_df
+
+# Create final visualization
+
+plt.figure(figsize=(20,13))
+
+font = {'family' : 'times new roman',
+        'weight' : 'normal',
+        'size'   : 18}
+
+plt.rc('font', **font)
+
+sns.barplot(data = final_ingredient_df, y = 'ingredient', x = 'count', color='#E33D26')
+ax = plt.subplot()
+ax.tick_params(axis='x')
+ax.tick_params(axis="x", bottom=True, top=True, labelbottom=True, labeltop=True)
+plt.ylabel('Ingredient')
+plt.xlabel('Count')
+plt.title('Top ' + str(len(final_ingredient_df)) + ' Ingredients')
+plt.show()
