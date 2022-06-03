@@ -1,0 +1,46 @@
+import pandas as pd
+import numpy as np
+import sqlite3 as sql
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Read the csv file into a dataframe and take a look
+
+df = pd.read_csv('nyt-ingredients-snapshot-2015.csv')
+print(df.head())
+print(df.shape)
+print(df.dtypes)
+print(len(df))
+
+# quick clean-up: make everything lower case
+
+df['name']=df['name'].str.lower()
+
+# create the ingredients counts table and learn dimensions
+
+ingredient_counts = df.groupby('name').index.count().reset_index()
+ingredient_counts.rename(columns={
+    'index': 'count'},
+    inplace=True)
+print(ingredient_counts.head())
+print(ingredient_counts.shape)
+
+# print the top 50 ingredients to get an idea of what the most common ingredients may be
+
+ingredient_counts.sort_values(by = ['count'], ascending = False, inplace = True)
+print(ingredient_counts.head(50))
+
+# make a visualization for personal use
+
+plt.figure(figsize=(20,10))
+sns.barplot(data = ingredient_counts.head(40), x = 'name', y = 'count', color='#E33D26')
+ax = plt.subplot()
+ax.tick_params(axis='x', rotation=80)
+plt.xlabel('Ingredient')
+plt.title('Top 40 Ingredients')
+plt.show()
+
+# Take a look at outliers to get a sense of potential errors in data set
+
+ingredient_counts.sort_values(by = ['count'], ascending = True, inplace = True)
+print(ingredient_counts.head(50))
